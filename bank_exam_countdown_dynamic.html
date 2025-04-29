@@ -258,7 +258,7 @@
 </head>
 <body>
     <h1>Upcoming Bank Exams Countdown</h1>
-    <p class="timezone-note">All times in Indian Standard Time (IST, UTC+5:30)</p>
+    <p class="timezone-note">Times in your local time zone</p>
     <table role="grid" aria-label="Bank exam countdown table">
         <thead>
             <tr>
@@ -293,21 +293,18 @@
         </p>
     </noscript>
 
-    <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
     <script>
-        const { DateTime } = luxon;
-
         const exams = [
-            { name: "LIC AAO Prelims", date: "2025-07-05T00:00:00" },
-            { name: "LIC AAO Mains", date: "2025-08-10T00:00:00" },
-            { name: "RRB PO Prelims", date: "2025-07-27T00:00:00" },
-            { name: "RRB PO Mains", date: "2025-09-13T00:00:00" },
-            { name: "RRB Clerk Prelims", date: "2025-08-30T00:00:00" },
-            { name: "RRB Clerk Mains", date: "2025-11-09T00:00:00" },
-            { name: "IBPS PO Prelims", date: "2025-10-04T00:00:00" },
-            { name: "IBPS PO Mains", date: "2025-11-29T00:00:00" },
-            { name: "IBPS Clerk Prelims", date: "2025-12-06T00:00:00" },
-            { name: "IBPS Clerk Mains", date: "2026-02-01T00:00:00" }
+            { name: "LIC AAO Prelims", date: "2025-07-05" },
+            { name: "LIC AAO Mains", date: "2025-08-10" },
+            { name: "RRB PO Prelims", date: "2025-07-27" },
+            { name: "RRB PO Mains", date: "2025-09-13" },
+            { name: "RRB Clerk Prelims", date: "2025-08-30" },
+            { name: "RRB Clerk Mains", date: "2025-11-09" },
+            { name: "IBPS PO Prelims", date: "2025-10-04" },
+            { name: "IBPS PO Mains", date: "2025-11-29" },
+            { name: "IBPS Clerk Prelims", date: "2025-12-06" },
+            { name: "IBPS Clerk Mains", date: "2026-02-01" }
         ];
 
         const tableBody = document.getElementById("countdown-table");
@@ -316,79 +313,8 @@
         function updateCountdown() {
             try {
                 tableBody.innerHTML = ""; // Clear existing rows
-                const today = DateTime.now().setZone("Asia/Kolkata");
-                console.log(`Current IST time: ${today.toFormat("yyyy-MM-dd HH:mm:ss ZZZZ")}`);
-
-                if (!exams || exams.length === 0) {
-                    throw new Error("No exam data available.");
-                }
-
-                exams.forEach(exam => {
-                    const examDate = DateTime.fromISO(exam.date, { zone: "Asia/Kolkata" });
-                    if (!examDate.isValid) {
-                        console.error(`Invalid date for exam: ${exam.name}`);
-                        return;
-                    }
-
-                    const diff = examDate.diff(today, ["days", "hours", "minutes"]).toObject();
-                    const diffDays = Math.floor(diff.days || 0);
-                    const diffHours = Math.floor(diff.hours || 0);
-                    const diffMinutes = Math.floor(diff.minutes || 0);
-                    const diffTime = examDate.toMillis() - today.toMillis();
-
-                    let countdownText = "";
-                    let countdownClass = "";
-
-                    if (diffTime > 0) {
-                        countdownText = `<span>${diffDays} days</span> <span>${diffHours}h</span> <span>${diffMinutes}m</span>`;
-                        countdownClass = "";
-                    } else if (diffTime > -86400000) {
-                        countdownText = "Exam Day!";
-                        countdownClass = "exam-day";
-                    } else {
-                        countdownText = "Completed";
-                        countdownClass = "completed";
-                    }
-
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td>${exam.name}</td>
-                        <td>${examDate.toFormat("dd MMMM yyyy")}</td>
-                        <td><span class="countdown ${countdownClass}">${countdownText}</span></td>
-                    `;
-                    tableBody.appendChild(row);
-
-                    console.log(`Added row for ${exam.name}: ${countdownText} (Exam Date: ${examDate.toFormat("yyyy-MM-dd HH:mm:ss ZZZZ")})`);
-                });
-
-                if (tableBody.children.length === 0) {
-                    throw new Error("No rows were added to the table.");
-                }
-
-                errorMessage.style.display = "none";
-            } catch (error) {
-                console.error("Error updating countdown:", error);
-                errorMessage.style.display = "block";
-                errorMessage.textContent = "Unable to load exam data. Please try refreshing the page or contact support.";
-            }
-        }
-
-        function toggleDarkMode() {
-            document.body.classList.toggle("dark-mode");
-        }
-
-        // Initial update
-        updateCountdown();
-
-        // Update every minute to reflect minutes changing
-        setInterval(updateCountdown, 1000 * 60);
-
-        // Alternative: Use browser's local time zone (uncomment to use)
-        /*
-        function updateCountdownBrowserTimeZone() {
-            try {
-                tableBody.innerHTML = "";
-                const today = new Date().getTime();
+                const today = new Date();
+                console.log(`Current local time: ${today.toLocaleString("en-IN", { timeZoneName: "long" })}`);
 
                 if (!exams || exams.length === 0) {
                     throw new Error("No exam data available.");
@@ -401,7 +327,7 @@
                         return;
                     }
 
-                    const diffTime = examDate.getTime() - today;
+                    const diffTime = examDate.getTime() - today.getTime();
                     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
                     const diffHours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     const diffMinutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
@@ -428,7 +354,7 @@
                     `;
                     tableBody.appendChild(row);
 
-                    console.log(`Added row for ${exam.name}: ${countdownText} (Exam Date: ${examDate.toISOString()})`);
+                    console.log(`Added row for ${exam.name}: ${countdownText} (Exam Date: ${examDate.toLocaleString("en-IN", { timeZoneName: "long" })})`);
                 });
 
                 if (tableBody.children.length === 0) {
@@ -442,9 +368,16 @@
                 errorMessage.textContent = "Unable to load exam data. Please try refreshing the page or contact support.";
             }
         }
-        // To use browser time zone, replace updateCountdown() calls with updateCountdownBrowserTimeZone()
-        // and update timezone-note to: <p class="timezone-note">Times in your local time zone</p>
-        */
+
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+
+        // Initial update
+        updateCountdown();
+
+        // Update every minute to reflect minutes changing
+        setInterval(updateCountdown, 1000 * 60);
     </script>
 </body>
 </html>
