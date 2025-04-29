@@ -258,7 +258,7 @@
 </head>
 <body>
     <h1>Upcoming Bank Exams Countdown</h1>
-    <p class="timezone-note">All times in Indian Standard Time (IST)</p>
+    <p class="timezone-note">All times in Indian Standard Time (IST, UTC+5:30)</p>
     <table role="grid" aria-label="Bank exam countdown table">
         <thead>
             <tr>
@@ -298,16 +298,16 @@
         const { DateTime } = luxon;
 
         const exams = [
-            { name: "LIC AAO Prelims", date: "2025-07-05" },
-            { name: "LIC AAO Mains", date: "2025-08-10" },
-            { name: "RRB PO Prelims", date: "2025-07-27" },
-            { name: "RRB PO Mains", date: "2025-09-13" },
-            { name: "RRB Clerk Prelims", date: "2025-08-30" },
-            { name: "RRB Clerk Mains", date: "2025-11-09" },
-            { name: "IBPS PO Prelims", date: "2025-10-04" },
-            { name: "IBPS PO Mains", date: "2025-11-29" },
-            { name: "IBPS Clerk Prelims", date: "2025-12-06" },
-            { name: "IBPS Clerk Mains", date: "2026-02-01" }
+            { name: "LIC AAO Prelims", date: "2025-07-05T00:00:00" },
+            { name: "LIC AAO Mains", date: "2025-08-10T00:00:00" },
+            { name: "RRB PO Prelims", date: "2025-07-27T00:00:00" },
+            { name: "RRB PO Mains", date: "2025-09-13T00:00:00" },
+            { name: "RRB Clerk Prelims", date: "2025-08-30T00:00:00" },
+            { name: "RRB Clerk Mains", date: "2025-11-09T00:00:00" },
+            { name: "IBPS PO Prelims", date: "2025-10-04T00:00:00" },
+            { name: "IBPS PO Mains", date: "2025-11-29T00:00:00" },
+            { name: "IBPS Clerk Prelims", date: "2025-12-06T00:00:00" },
+            { name: "IBPS Clerk Mains", date: "2026-02-01T00:00:00" }
         ];
 
         const tableBody = document.getElementById("countdown-table");
@@ -317,6 +317,7 @@
             try {
                 tableBody.innerHTML = ""; // Clear existing rows
                 const today = DateTime.now().setZone("Asia/Kolkata");
+                console.log(`Current IST time: ${today.toFormat("yyyy-MM-dd HH:mm:ss ZZZZ")}`);
 
                 if (!exams || exams.length === 0) {
                     throw new Error("No exam data available.");
@@ -357,7 +358,7 @@
                     `;
                     tableBody.appendChild(row);
 
-                    console.log(`Added row for ${exam.name}: ${countdownText}`);
+                    console.log(`Added row for ${exam.name}: ${countdownText} (Exam Date: ${examDate.toFormat("yyyy-MM-dd HH:mm:ss ZZZZ")})`);
                 });
 
                 if (tableBody.children.length === 0) {
@@ -427,7 +428,7 @@
                     `;
                     tableBody.appendChild(row);
 
-                    console.log(`Added row for ${exam.name}: ${countdownText}`);
+                    console.log(`Added row for ${exam.name}: ${countdownText} (Exam Date: ${examDate.toISOString()})`);
                 });
 
                 if (tableBody.children.length === 0) {
@@ -442,6 +443,7 @@
             }
         }
         // To use browser time zone, replace updateCountdown() calls with updateCountdownBrowserTimeZone()
+        // and update timezone-note to: <p class="timezone-note">Times in your local time zone</p>
         */
     </script>
 </body>
