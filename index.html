@@ -7,7 +7,7 @@
     <meta name="keywords" content="bank exams, countdown timer, LIC AAO, RRB PO, IBPS PO, exam dates">
     <meta name="author" content="Tanu Garg">
     <meta property="og:title" content="Bank Exam Dates Countdown">
-    <meta property="og:description" content="Track upcoming bank exam dates with our countdown timer by Future Bankers - Tanu Garg.">
+    <meta property="og:description" content="Track upcoming bank exam dates with our countdown timer by Future Bankers by Tanu Garg.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yourwebsite.com">
     <meta property="og:image" content="https://yourwebsite.com/og-image.jpg">
@@ -66,13 +66,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            border-radius: 6px;
-            transition: background 0.3s ease;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .exam-date:hover {
-            background: #f0f4ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .exam-date strong {
@@ -90,12 +92,25 @@
         }
 
         .countdown {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            color: #007BFF;
-            background: #e6f0ff;
-            padding: 5px 10px;
-            border-radius: 4px;
+            color: #fff;
+            background: linear-gradient(45deg, #007BFF, #00c4b4);
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 100px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .countdown.completed {
+            background: #dc3545;
+        }
+
+        .countdown.exam-day {
+            background: #28a745;
         }
 
         .exam-date-text {
@@ -187,11 +202,20 @@
 
         body.dark-mode .exam-date {
             color: #ecf0f1;
+            background: #34495e;
         }
 
         body.dark-mode .countdown {
-            color: #3498db;
-            background: #34495e;
+            color: #fff;
+            background: linear-gradient(45deg, #3498db, #1abc9c);
+        }
+
+        body.dark-mode .countdown.completed {
+            background: #c0392b;
+        }
+
+        body.dark-mode .countdown.exam-day {
+            background: #27ae60;
         }
 
         body.dark-mode .refresh-button {
@@ -226,6 +250,11 @@
             background: #2980b9;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         @media (max-width: 600px) {
             .countdown-container {
                 padding: 20px;
@@ -240,10 +269,12 @@
                 font-size: 1.1rem;
                 flex-direction: column;
                 align-items: flex-start;
+                padding: 10px;
             }
             .countdown {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
                 margin-top: 10px;
+                min-width: 80px;
             }
             .exam-date-text {
                 margin-left: 0;
@@ -259,7 +290,7 @@
 <body>
     <section class="countdown-container" aria-labelledby="countdown-title">
         <h1 id="countdown-title">Upcoming Bank Exam Dates Countdown</h1>
-        <p class="channel-credit">By <a href="https://linktr.ee/tanugarg01" target="_blank">Future Bankers - Tanu Garg</a></p>
+        <p class="channel-credit">By <a href="https://linktr.ee/tanugarg01" target="_blank">Future Bankers by Tanu Garg</a></p>
 
         <article class="exam-date" role="region" aria-label="LIC AAO Prelims countdown" data-date="">
             <strong><a href="https://www.licindia.in/" target="_blank">LIC AAO Prelims:</a></strong>
@@ -350,7 +381,7 @@
             return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
         }
 
-        // Function to calculate time difference
+        // Function to calculate days remaining
         function updateCountdown() {
             const now = new Date().getTime();
             Object.keys(examDates).forEach(exam => {
@@ -358,19 +389,17 @@
                 const examTime = examDates[exam].getTime();
                 const timeLeft = examTime - now;
 
+                countdownElement.classList.remove('completed', 'exam-day');
+
                 if (timeLeft > 0) {
                     const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-                    countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-                    countdownElement.style.color = '#007BFF';
+                    countdownElement.innerHTML = `${days} days`;
                 } else if (timeLeft > -86400000) {
-                    countdownElement.innerHTML = "EXAM DAY!";
-                    countdownElement.style.color = '#28a745';
+                    countdownElement.innerHTML = "Exam Day!";
+                    countdownElement.classList.add('exam-day');
                 } else {
                     countdownElement.innerHTML = "Exam Completed";
-                    countdownElement.style.color = '#dc3545';
+                    countdownElement.classList.add('completed');
                 }
             });
         }
@@ -382,7 +411,7 @@
 
         // Initial call and interval
         updateCountdown();
-        setInterval(updateCountdown, 1000);
+        setInterval(updateCountdown, 1000 * 60 * 60 * 24); // Update daily since only days matter
 
         // Add exam dates to HTML
         Object.keys(examDates).forEach(exam => {
