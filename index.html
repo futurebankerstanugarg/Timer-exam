@@ -130,6 +130,14 @@
             background: #5a6268;
         }
 
+        .error-message {
+            color: #dc3545;
+            font-size: 1rem;
+            margin: 20px auto;
+            max-width: 800px;
+            text-align: center;
+        }
+
         body.dark-mode {
             background: linear-gradient(135deg, #2c3e50, #34495e);
             color: #ecf0f1;
@@ -233,6 +241,10 @@
         <tbody id="countdown-table"></tbody>
     </table>
 
+    <div id="error-message" class="error-message" style="display: none;">
+        Unable to load exam data. Please try refreshing the page or contact support.
+    </div>
+
     <button onclick="toggleDarkMode()" class="dark-mode-toggle">Toggle Dark Mode</button>
 
     <div class="footer">
@@ -267,38 +279,62 @@
         ];
 
         const tableBody = document.getElementById("countdown-table");
+        const errorMessage = document.getElementById("error-message");
 
         function updateCountdown() {
-            tableBody.innerHTML = ""; // Clear existing rows
-            const today = new Date().getTime();
+            try {
+                tableBody.innerHTML = ""; // Clear existing rows
+                const today = new Date().getTime();
 
-            exams.forEach(exam => {
-                const examDate = new Date(exam.date).getTime();
-                const diffTime = examDate - today;
-                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-                let countdownText = "";
-                let countdownClass = "";
-
-                if (diffTime > 0) {
-                    countdownText = `${diffDays} days`;
-                    countdownClass = "";
-                } else if (diffTime > -86400000) {
-                    countdownText = "Exam Day!";
-                    countdownClass = "exam-day";
-                } else {
-                    countdownText = "Completed";
-                    countdownClass = "completed";
+                if (!exams || exams.length === 0) {
+                    throw new Error("No exam data available.");
                 }
 
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${exam.name}</td>
-                    <td>${new Date(exam.date).toLocaleDateString("en-IN", { day: '2-digit', month: 'long', year: 'numeric' })}</td>
-                    <td><span class="countdown ${countdownClass}">${countdownText}</span></td>
-                `;
-                tableBody.appendChild(row);
-            });
+                exams.forEach(exam => {
+                    const examDate = new Date(exam.date);
+                    if (isNaN(examDate.getTime())) {
+                        console.error(`Invalid date for exam: ${exam.name}`);
+                        return;
+                    }
+
+                    const diffTime = examDate.getTime() - today;
+                    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+                    let countdownText = "";
+                    let countdownClass = "";
+
+                    if (diffTime > 0) {
+                        countdownText = `${diffDays} days`;
+                        countdownClass = "";
+                    } else if (diffTime > -86400000) {
+                        countdownText = "Exam Day!";
+                        countdownClass = "exam-day";
+                    } else {
+                        countdownText = "Completed";
+                        countdownClass = "completed";
+                    }
+
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${exam.name}</td>
+                        <td>${examDate.toLocaleDateString("en-IN", { day: '2-digit', month: 'long', year: 'numeric' })}</td>
+                        <td><span class="countdown ${countdownClass}">${countdownText}</span></td>
+                    `;
+                    tableBody.appendChild(row);
+
+                    console.log(`Added row for ${exam.name}: ${countdownText}`);
+                });
+
+                if (tableBody.children.length === 0) {
+                    throw new Error("No rows were added to the table.");
+                }
+
+                errorMessage.style.display = "none";
+            } catch (error) {
+                console.error("Error updating countdown:", error);
+                errorMessage.style.display = "block";
+                errorMessage.textContent = "Unable to load exam data. Please try refreshing the page or contact support.";
+            }
         }
 
         function toggleDarkMode() {
