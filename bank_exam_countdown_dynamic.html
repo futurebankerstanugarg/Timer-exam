@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bank Exam Countdown - Future Bankers</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f2f8ff;
+            color: #333;
+            text-align: center;
+            padding: 40px;
+        }
+        h1 {
+            color: #0645AD;
+            font-size: 32px;
+        }
+        table {
+            margin: 30px auto;
+            border-collapse: collapse;
+            width: 90%;
+            max-width: 800px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #0645AD;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #555;
+        }
+        .links a {
+            display: inline-block;
+            margin: 8px 12px;
+            text-decoration: none;
+            color: #0645AD;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upcoming Bank Exams Countdown</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Exam</th>
+                <th>Date</th>
+                <th>Days Left</th>
+            </tr>
+        </thead>
+        <tbody id="countdown-table">
+            <!-- Rows will be inserted here dynamically -->
+        </tbody>
+    </table>
+
+    <div class="footer">
+        Provided by <strong>Future Bankers – Tanu Garg</strong>
+        <div class="links">
+            <a href="https://linktr.ee/tanugarg01" target="_blank">LinkTree</a> |
+            <a href="https://t.me/tanugarg01" target="_blank">Telegram</a> |
+            <a href="https://youtube.com/@futurebankers01" target="_blank">YouTube</a> |
+            <a href="https://www.instagram.com/tanugarg01" target="_blank">Instagram</a> |
+            <a href="https://www.instagram.com/tanugarrgg01" target="_blank">Banking Instagram</a>
+        </div>
+    </div>
+
+    <script>
+        const exams = [
+            {{ name: "LIC AAO Prelims", date: "2025-07-05" }},
+            {{ name: "LIC AAO Mains", date: "2025-08-10" }},
+            {{ name: "RRB PO Prelims", date: "2025-07-27" }},
+            {{ name: "RRB PO Mains", date: "2025-09-13" }},
+            {{ name: "RRB Clerk Prelims", date: "2025-08-30" }},
+            {{ name: "RRB Clerk Mains", date: "2025-11-09" }},
+            {{ name: "IBPS PO Prelims", date: "2025-10-04" }},
+            {{ name: "IBPS PO Mains", date: "2025-11-29" }},
+            {{ name: "IBPS Clerk Prelims", date: "2025-12-06" }},
+            {{ name: "IBPS Clerk Mains", date: "2026-02-01" }},
+        ];
+
+        const table = document.getElementById("countdown-table");
+        const today = new Date();
+
+        exams.forEach(exam => {
+            const examDate = new Date(exam.date);
+            const diffTime = examDate - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${exam.name}</td>
+                <td>${examDate.toLocaleDateString("en-IN", {{ day: '2-digit', month: 'long', year: 'numeric' }})}</td>
+                <td>${diffDays >= 0 ? diffDays + " days" : "Completed"}</td>
+            `;
+            table.appendChild(row);
+        });
+    </script>
+</body>
+</html>
