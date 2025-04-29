@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Countdown timer for upcoming bank exams including LIC AAO, RRB PO, RRB Clerk, IBPS PO, and IBPS Clerk.">
     <meta name="keywords" content="bank exams, countdown timer, LIC AAO, RRB PO, IBPS PO, exam dates">
-    <meta name="author" content="Your Name">
+    <meta name="author" content="Tanu Garg">
     <meta property="og:title" content="Bank Exam Dates Countdown">
-    <meta property="og:description" content="Track upcoming bank exam dates with our countdown timer.">
+    <meta property="og:description" content="Track upcoming bank exam dates with our countdown timer by Future Bankers by Tanu Garg.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yourwebsite.com">
     <meta property="og:image" content="https://yourwebsite.com/og-image.jpg">
@@ -41,7 +41,22 @@
         h1 {
             font-size: 2.5rem;
             color: #1a3c6e;
+            margin-bottom: 10px;
+        }
+
+        .channel-credit {
+            font-size: 1.2rem;
+            color: #2d2d2d;
             margin-bottom: 30px;
+        }
+
+        .channel-credit a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .channel-credit a:hover {
+            text-decoration: underline;
         }
 
         .exam-date {
@@ -106,7 +121,7 @@
         }
 
         .dark-mode-toggle {
-            margin-top: 20px;
+            margin-top: 10px;
             padding: 10px 20px;
             font-size: 1rem;
             background: #6c757d;
@@ -119,6 +134,45 @@
 
         .dark-mode-toggle:hover {
             background: #5a6268;
+        }
+
+        .social-links {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .social-links h2 {
+            font-size: 1.5rem;
+            color: #1a3c6e;
+            margin-bottom: 15px;
+        }
+
+        .social-links ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .social-links li {
+            display: inline-block;
+        }
+
+        .social-links a {
+            display: inline-block;
+            padding: 8px 15px;
+            font-size: 1rem;
+            color: #fff;
+            background: #007BFF;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #0056b3;
         }
 
         body.dark-mode {
@@ -148,12 +202,39 @@
             background: #2980b9;
         }
 
+        body.dark-mode .dark-mode-toggle {
+            background: #3498db;
+        }
+
+        body.dark-mode .dark-mode-toggle:hover {
+            background: #2980b9;
+        }
+
+        body.dark-mode .channel-credit {
+            color: #ecf0f1;
+        }
+
+        body.dark-mode .social-links h2 {
+            color: #ecf0f1;
+        }
+
+        body.dark-mode .social-links a {
+            background: #3498db;
+        }
+
+        body.dark-mode .social-links a:hover {
+            background: #2980b9;
+        }
+
         @media (max-width: 600px) {
             .countdown-container {
                 padding: 20px;
             }
             h1 {
                 font-size: 1.8rem;
+            }
+            .channel-credit {
+                font-size: 1rem;
             }
             .exam-date {
                 font-size: 1.1rem;
@@ -168,12 +249,17 @@
                 margin-left: 0;
                 margin-top: 5px;
             }
+            .social-links ul {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
     <section class="countdown-container" aria-labelledby="countdown-title">
         <h1 id="countdown-title">Upcoming Bank Exam Dates Countdown</h1>
+        <p class="channel-credit">By <a href="https://linktr.ee/tanugarg01" target="_blank">Future Bankers by Tanu Garg</a></p>
 
         <article class="exam-date" role="region" aria-label="LIC AAO Prelims countdown" data-date="">
             <strong><a href="https://www.licindia.in/" target="_blank">LIC AAO Prelims:</a></strong>
@@ -228,6 +314,16 @@
 
         <button onclick="updateCountdown()" class="refresh-button">Refresh Countdown</button>
         <button onclick="toggleDarkMode()" class="dark-mode-toggle">Toggle Dark Mode</button>
+
+        <div class="social-links">
+            <h2>Join Future Bankers by Tanu Garg</h2>
+            <ul>
+                <li><a href="https://linktr.ee/tanugarg01" target="_blank" rel="noopener" aria-label="Linktree for all social media accounts">All Socials (Linktree)</a></li>
+                <li><a href="https://youtube.com/@futurebankers01" target="_blank" rel="noopener" aria-label="Future Bankers YouTube channel">YouTube</a></li>
+                <li><a href="https://www.instagram.com/tanugarg01" target="_blank" rel="noopener" aria-label="Tanu Garg Instagram">Instagram</a></li>
+                <li><a href="https://www.instagram.com/tanugarrgg01" target="_blank" rel="noopener" aria-label="Banking Instagram">Banking Instagram</a></li>
+            </ul>
+        </div>
 
         <noscript>
             <p style="color: #dc3545; text-align: center;">JavaScript is required to view the countdown. Please enable JavaScript or check the exam dates manually.</p>
