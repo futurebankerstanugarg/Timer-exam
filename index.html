@@ -74,9 +74,18 @@
             background: linear-gradient(45deg, #007BFF, #00c4b4);
             padding: 8px 15px;
             border-radius: 20px;
-            display: inline-block;
-            min-width: 80px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 120px;
             animation: fadeIn 0.5s ease-in;
+        }
+
+        .countdown span {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 0.9em;
         }
 
         .countdown.exam-day {
@@ -178,6 +187,10 @@
             background: #c0392b;
         }
 
+        body.dark-mode .countdown span {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
         body.dark-mode .links a {
             color: #3498db;
         }
@@ -215,8 +228,13 @@
             }
             .countdown {
                 padding: 6px 12px;
-                font-size: 0.9rem;
-                min-width: 60px;
+                font-size: 0.8rem;
+                min-width: 100px;
+                gap: 5px;
+            }
+            .countdown span {
+                padding: 3px 6px;
+                font-size: 0.7em;
             }
             .footer {
                 font-size: 0.9rem;
@@ -235,7 +253,7 @@
             <tr>
                 <th scope="col">Exam</th>
                 <th scope="col">Date</th>
-                <th scope="col">Days Left</th>
+                <th scope="col">Time Left</th>
             </tr>
         </thead>
         <tbody id="countdown-table"></tbody>
@@ -299,12 +317,14 @@
 
                     const diffTime = examDate.getTime() - today;
                     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                    const diffHours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const diffMinutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
 
                     let countdownText = "";
                     let countdownClass = "";
 
                     if (diffTime > 0) {
-                        countdownText = `${diffDays} days`;
+                        countdownText = `<span>${diffDays} days</span> <span>${diffHours}h</span> <span>${diffMinutes}m</span>`;
                         countdownClass = "";
                     } else if (diffTime > -86400000) {
                         countdownText = "Exam Day!";
@@ -344,8 +364,8 @@
         // Initial update
         updateCountdown();
 
-        // Update daily
-        setInterval(updateCountdown, 1000 * 60 * 60 * 24);
+        // Update every minute to reflect minutes changing
+        setInterval(updateCountdown, 1000 * 60);
     </script>
 </body>
 </html>
