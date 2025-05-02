@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Countdown timer for upcoming bank exams by Future Bankers by Tanu Garg, including LIC AAO, RRB PO, RRB Clerk, IBPS PO, and IBPS Clerk.">
-    <meta name="keywords" content="bank exams, countdown timer, LIC AAO, RRB PO, IBPS PO, exam dates, Future Bankers, Tanu Garg">
+    <meta name="description" content="Countdown timer for upcoming bank exams by Future Bankers by Tanu Garg, including RRB PO, RRB Clerk, IBPS PO, and IBPS Clerk.">
+    <meta name="keywords" content="bank exams, countdown timer, RRB PO, IBPS PO, exam dates, Future Bankers, Tanu Garg">
     <meta name="author" content="Tanu Garg">
     <meta property="og:title" content="Bank Exam Dates Countdown - Future Bankers">
     <meta property="og:description" content="Track upcoming bank exam dates with our countdown timer by Future Bankers by Tanu Garg.">
@@ -96,22 +96,6 @@
             background: #dc3545;
         }
 
-        .tentative-note {
-            font-size: 1rem;
-            color: #555;
-            background: #f8f9fa;
-            border: 1px solid #e0e7ff;
-            padding: 10px;
-            margin: 20px auto;
-            max-width: 800px;
-            border-radius: 5px;
-            font-style: italic;
-        }
-
-        .tentative-note strong {
-            color: #0645AD;
-        }
-
         .footer {
             margin-top: 40px;
             font-size: 1rem;
@@ -170,9 +154,7 @@
 
         body.dark-mode h1,
         body.dark-mode .footer,
-        body.dark-mode .footer strong,
-        body.dark-mode .tentative-note,
-        body.dark-mode .tentative-note strong {
+        body.dark-mode .footer strong {
             color: #3498db;
         }
 
@@ -207,11 +189,6 @@
 
         body.dark-mode .countdown span {
             background: rgba(255, 255, 255, 0.1);
-        }
-
-        body.dark-mode .tentative-note {
-            background: #3e5a74;
-            border: 1px solid #4a6278;
         }
 
         body.dark-mode .links a {
@@ -259,11 +236,6 @@
                 padding: 3px 6px;
                 font-size: 0.7em;
             }
-            .tentative-note {
-                font-size: 0.9rem;
-                padding: 8px;
-                margin: 15px auto;
-            }
             .footer {
                 font-size: 0.9rem;
             }
@@ -286,10 +258,6 @@
         </thead>
         <tbody id="countdown-table"></tbody>
     </table>
-
-    <div class="tentative-note" role="note" aria-label="Note about tentative LIC exam dates">
-        <strong>Note:</strong> LIC AAO Prelims and Mains dates are tentative and subject to official confirmation.
-    </div>
 
     <div id="error-message" class="error-message" style="display: none;">
         Unable to load exam data. Please try refreshing the page or contact support.
@@ -316,8 +284,6 @@
 
     <script>
         const exams = [
-            { name: "LIC AAO Prelims", date: "2025-07-05" },
-            { name: "LIC AAO Mains", date: "2025-08-10" },
             { name: "RRB PO Prelims", date: "2025-07-27" },
             { name: "RRB PO Mains", date: "2025-09-13" },
             { name: "RRB Clerk Prelims", date: "2025-08-30" },
