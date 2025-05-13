@@ -31,9 +31,9 @@
 
         .content-wrapper {
             position: relative;
-            /* Repeating SVG watermark */
-            background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150"><text x="10" y="75" font-family="Roboto, sans-serif" font-size="14" fill="%23333" opacity="0.5" transform="rotate(-45 75 75)">Future Bankers - Tanu Garg</text></svg>');
-            background-size: 150px 150px;
+            /* Repeating SVG watermark, halved spacing */
+            background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="75" height="75"><text x="5" y="37.5" font-family="Roboto, sans-serif" font-size="14" fill="%23333" opacity="0.5" transform="rotate(-45 37.5 37.5)">Future Bankers - Tanu Garg</text></svg>');
+            background-size: 75px 75px;
             background-repeat: repeat;
         }
 
@@ -177,7 +177,7 @@
         }
 
         body.dark-mode .content-wrapper {
-            background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150"><text x="10" y="75" font-family="Roboto, sans-serif" font-size="14" fill="%23ddd" opacity="0.5" transform="rotate(-45 75 75)">Future Bankers - Tanu Garg</text></svg>');
+            background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="75" height="75"><text x="5" y="37.5" font-family="Roboto, sans-serif" font-size="14" fill="%23ddd" opacity="0.5" transform="rotate(-45 37.5 37.5)">Future Bankers - Tanu Garg</text></svg>');
         }
 
         body.dark-mode h1,
@@ -255,12 +255,12 @@
                 padding: 20px;
             }
             .content-wrapper {
-                background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text x="10" y="50" font-family="Roboto, sans-serif" font-size="10" fill="%23333" opacity="0.5" transform="rotate(-45 50 50)">Future Bankers - Tanu Garg</text></svg>');
-                background-size: 100px 100px;
+                background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><text x="5" y="25" font-family="Roboto, sans-serif" font-size="10" fill="%23333" opacity="0.5" transform="rotate(-45 25 25)">Future Bankers - Tanu Garg</text></svg>');
+                background-size: 50px 50px;
             }
             body.dark-mode .content-wrapper {
-                background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text x="10" y="50" font-family="Roboto, sans-serif" font-size="10" fill="%23ddd" opacity="0.5" transform="rotate(-45 50 50)">Future Bankers - Tanu Garg</text></svg>');
-                background-size: 100px 100px;
+                background-image: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><text x="5" y="25" font-family="Roboto, sans-serif" font-size="10" fill="%23ddd" opacity="0.5" transform="rotate(-45 25 25)">Future Bankers - Tanu Garg</text></svg>');
+                background-size: 50px 50px;
             }
             h1 {
                 font-size: 1.8rem;
@@ -368,7 +368,7 @@
                 console.log(`Page loaded successfully`);
                 console.log(`Current local time: ${today.toLocaleString("en-IN", { timeZoneName: "long" })}`);
                 console.log(`Time zone offset: ${-timeZoneOffset / 60} hours from UTC (negative means ahead of UTC)`);
-                console.log(`Watermark applied: SVG background on .content-wrapper, repeating every 150px`);
+                console.log(`Watermark applied: SVG background on .content-wrapper, repeating every 75px`);
 
                 if (!exams || exams.length === 0) {
                     throw new Error("No exam data available.");
