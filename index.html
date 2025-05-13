@@ -27,49 +27,52 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+        }
+
+        .content-wrapper {
             position: relative;
         }
 
-        /* Watermark overlay for entire page */
-        .watermark-overlay {
+        /* Watermark using ::before on wrapper */
+        .content-wrapper::before {
+            content: "Future Bankers – Tanu Garg Future Bankers – Tanu Garg Future Bankers – Tanu Garg";
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            color: #444;
-            opacity: 0.4;
+            color: #333;
+            opacity: 0.5;
             font-size: 20px;
             font-weight: 600;
-            line-height: 100px;
-            background: repeating-linear-gradient(
-                -45deg,
-                transparent,
-                transparent 50px,
-                rgba(0, 0, 0, 0.05) 50px,
-                rgba(0, 0, 0, 0.05) 100px
-            );
+            line-height: 80px;
+            text-align: left;
+            white-space: pre-wrap;
             pointer-events: none;
             z-index: -1;
             transform: rotate(-45deg);
-            overflow: hidden;
+            transform-origin: top left;
         }
 
-        .watermark-overlay::before {
-            content: "Future Bankers – Tanu Garg";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            right: -50%;
-            bottom: -50%;
-            background: inherit;
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            font-size: inherit;
-            line-height: inherit;
-            transform: rotate(45deg);
-            display: block;
+        /* Fallback watermark div */
+        .watermark-fallback {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            color: #333;
+            opacity: 0.5;
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 80px;
+            text-align: left;
+            white-space: pre-wrap;
+            pointer-events: none;
+            z-index: -1;
+            transform: rotate(-45deg);
+            transform-origin: top left;
+            display: none; /* Hidden unless needed */
         }
 
         h1 {
@@ -83,42 +86,17 @@
             border-collapse: collapse;
             width: 90%;
             max-width: 800px;
-            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent for watermark visibility */
+            background: transparent; /* Transparent to show watermark */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             overflow: hidden;
-            position: relative;
-        }
-
-        /* Apply watermark to table background */
-        table::before {
-            content: "Future Bankers – Tanu Garg";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            color: #444;
-            opacity: 0.4;
-            font-size: 20px;
-            font-weight: 600;
-            line-height: 100px;
-            background: repeating-linear-gradient(
-                -45deg,
-                transparent,
-                transparent 50px,
-                rgba(0, 0, 0, 0.05) 50px,
-                rgba(0, 0, 0, 0.05) 100px
-            );
-            pointer-events: none;
-            z-index: -1;
-            transform: rotate(-45deg);
         }
 
         th, td {
             padding: 15px;
             border-bottom: 1px solid #ddd;
             font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.85); /* Slight opacity for readability */
         }
 
         th {
@@ -133,7 +111,7 @@
         }
 
         tr:hover {
-            background-color: rgba(240, 244, 255, 0.9);
+            background: rgba(240, 244, 255, 0.85);
             transform: translateY(-2px);
         }
 
@@ -236,16 +214,9 @@
             color: #ecf0f1;
         }
 
-        body.dark-mode .watermark-overlay,
-        body.dark-mode table::before {
-            color: #ccc;
-            background: repeating-linear-gradient(
-                -45deg,
-                transparent,
-                transparent 50px,
-                rgba(255, 255, 255, 0.05) 50px,
-                rgba(255, 255, 255, 0.05) 100px
-            );
+        body.dark-mode .content-wrapper::before,
+        body.dark-mode .watermark-fallback {
+            color: #ddd;
         }
 
         body.dark-mode h1,
@@ -255,7 +226,7 @@
         }
 
         body.dark-mode table {
-            background: rgba(52, 73, 94, 0.9);
+            background: transparent;
         }
 
         body.dark-mode th {
@@ -264,10 +235,11 @@
 
         body.dark-mode td {
             border-bottom: 1px solid #4a6278;
+            background: rgba(52, 73, 94, 0.85);
         }
 
         body.dark-mode tr:hover {
-            background: rgba(62, 90, 116, 0.9);
+            background: rgba(62, 90, 116, 0.85);
         }
 
         body.dark-mode .countdown {
@@ -321,27 +293,10 @@
             body {
                 padding: 20px;
             }
-            .watermark-overlay,
-            table::before {
+            .content-wrapper::before,
+            .watermark-fallback {
                 font-size: 16px;
-                line-height: 80px;
-                background: repeating-linear-gradient(
-                    -45deg,
-                    transparent,
-                    transparent 40px,
-                    rgba(0, 0, 0, 0.05) 40px,
-                    rgba(0, 0, 0, 0.05) 80px
-                );
-            }
-            body.dark-mode .watermark-overlay,
-            body.dark-mode table::before {
-                background: repeating-linear-gradient(
-                    -45deg,
-                    transparent,
-                    transparent 40px,
-                    rgba(255, 255, 255, 0.05) 40px,
-                    rgba(255, 255, 255, 0.05) 80px
-                );
+                line-height: 60px;
             }
             h1 {
                 font-size: 1.8rem;
@@ -381,41 +336,44 @@
     </style>
 </head>
 <body>
-    <div class="watermark-overlay"></div>
-    <h1>Upcoming Bank Exams Countdown</h1>
+    <div class="content-wrapper">
+        <!-- Fallback watermark if pseudo-element fails -->
+        <div class="watermark-fallback">Future Bankers – Tanu Garg Future Bankers – Tanu Garg Future Bankers – Tanu Garg</div>
+        <h1>Upcoming Bank Exams Countdown</h1>
 
-    <!-- Option 2: Prominent text (uncomment to use instead of watermark) -->
-    <!--
-    <div class="provided-by" role="note" aria-label="Provided by Future Bankers and Tanu Garg">
-        Provided by Future Bankers – Tanu Garg
-    </div>
-    -->
+        <!-- Option 2: Prominent text (uncomment to use instead of watermark) -->
+        <!--
+        <div class="provided-by" role="note" aria-label="Provided by Future Bankers and Tanu Garg">
+            Provided by Future Bankers – Tanu Garg
+        </div>
+        -->
 
-    <table role="grid" aria-label="Bank exam countdown table">
-        <thead>
-            <tr>
-                <th scope="col">Exam</th>
-                <th scope="col">Date</th>
-                <th scope="col">Time Left</th>
-            </tr>
-        </thead>
-        <tbody id="countdown-table"></tbody>
-    </table>
+        <table role="grid" aria-label="Bank exam countdown table">
+            <thead>
+                <tr>
+                    <th scope="col">Exam</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time Left</th>
+                </tr>
+            </thead>
+            <tbody id="countdown-table"></tbody>
+        </table>
 
-    <div id="error-message" class="error-message" style="display: none;">
-        Unable to load exam data. Please try refreshing the page or contact support.
-    </div>
+        <div id="error-message" class="error-message" style="display: none;">
+            Unable to load exam data. Please try refreshing the page or contact support.
+        </div>
 
-    <button onclick="toggleDarkMode()" class="dark-mode-toggle">Toggle Dark Mode</button>
+        <button onclick="toggleDarkMode()" class="dark-mode-toggle">Toggle Dark Mode</button>
 
-    <div class="footer">
-        Provided by <strong>Future Bankers – Tanu Garg</strong>
-        <div class="links">
-            <a href="https://linktr.ee/tanugarg01" target="_blank" rel="noopener" aria-label="Linktree for all social media accounts">LinkTree</a> |
-            <a href="https://t.me/tanugarg01" target="_blank" rel="noopener" aria-label="Future Bankers Telegram channel">Telegram</a> |
-            <a href="https://youtube.com/@futurebankers01" target="_blank" rel="noopener" aria-label="Future Bankers YouTube channel">YouTube</a> |
-            <a href="https://www.instagram.com/tanugarg01" target="_blank" rel="noopener" aria-label="Tanu Garg Instagram">Instagram</a> |
-            <a href="https://www.instagram.com/tanugarrgg01" target="_blank" rel="noopener" aria-label="Banking Instagram">Banking Instagram</a>
+        <div class="footer">
+            Provided by <strong>Future Bankers – Tanu Garg</strong>
+            <div class="links">
+                <a href="https://linktr.ee/tanugarg01" target="_blank" rel="noopener" aria-label="Linktree for all social media accounts">LinkTree</a> |
+                <a href="https://t.me/tanugarg01" target="_blank" rel="noopener" aria-label="Future Bankers Telegram channel">Telegram</a> |
+                <a href="https://youtube.com/@futurebankers01" target="_blank" rel="noopener" aria-label="Future Bankers YouTube channel">YouTube</a> |
+                <a href="https://www.instagram.com/tanugarg01" target="_blank" rel="noopener" aria-label="Tanu Garg Instagram">Instagram</a> |
+                <a href="https://www.instagram.com/tanugarrgg01" target="_blank" rel="noopener" aria-label="Banking Instagram">Banking Instagram</a>
+            </div>
         </div>
     </div>
 
@@ -448,12 +406,18 @@
                 console.log(`Current local time: ${today.toLocaleString("en-IN", { timeZoneName: "long" })}`);
                 console.log(`Time zone offset: ${-timeZoneOffset / 60} hours from UTC (negative means ahead of UTC)`);
 
+                // Check if watermark is rendered
+                const watermark = document.querySelector(".content-wrapper::before") || document.querySelector(".watermark-fallback");
+                console.log(`Watermark status: ${watermark ? "Rendered" : "Not rendered, enabling fallback"}`);
+                if (!watermark) {
+                    document.querySelector(".watermark-fallback").style.display = "block";
+                }
+
                 if (!exams || exams.length === 0) {
                     throw new Error("No exam data available.");
                 }
 
                 exams.forEach(exam => {
-                    // Explicitly set exam date to midnight in local time zone
                     const examDate = new Date(exam.date + "T00:00:00");
                     if (isNaN(examDate.getTime())) {
                         console.error(`Invalid date for exam: ${exam.name}`);
@@ -509,7 +473,7 @@
         // Initial update
         updateCountdown();
 
-        // Update every minute to reflect minutes changing
+        // Update every minute
         setInterval(updateCountdown, 1000 * 60);
     </script>
 </body>
