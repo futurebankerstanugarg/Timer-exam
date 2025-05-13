@@ -27,33 +27,49 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            position: relative; /* Ensure watermark positioning */
+            position: relative;
         }
 
-        /* Watermark using ::before pseudo-element */
-        body::before {
-            content: "Future Bankers – Tanu Garg";
+        /* Watermark overlay for entire page */
+        .watermark-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            color: #555;
+            color: #444;
             opacity: 0.4;
-            font-size: 40px;
+            font-size: 20px;
             font-weight: 600;
-            text-align: center;
-            line-height: 250px; /* Spacing between watermark repetitions */
+            line-height: 100px;
             background: repeating-linear-gradient(
                 -45deg,
                 transparent,
-                transparent 100px,
-                rgba(0, 0, 0, 0.05) 100px,
-                rgba(0, 0, 0, 0.05) 200px
+                transparent 50px,
+                rgba(0, 0, 0, 0.05) 50px,
+                rgba(0, 0, 0, 0.05) 100px
             );
-            pointer-events: none; /* Prevent interaction with watermark */
-            z-index: -1; /* Place behind content */
+            pointer-events: none;
+            z-index: -1;
             transform: rotate(-45deg);
+            overflow: hidden;
+        }
+
+        .watermark-overlay::before {
+            content: "Future Bankers – Tanu Garg";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            background: inherit;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            font-size: inherit;
+            line-height: inherit;
+            transform: rotate(45deg);
+            display: block;
         }
 
         h1 {
@@ -67,10 +83,36 @@
             border-collapse: collapse;
             width: 90%;
             max-width: 800px;
-            background-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent for watermark visibility */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             overflow: hidden;
+            position: relative;
+        }
+
+        /* Apply watermark to table background */
+        table::before {
+            content: "Future Bankers – Tanu Garg";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            color: #444;
+            opacity: 0.4;
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 100px;
+            background: repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 50px,
+                rgba(0, 0, 0, 0.05) 50px,
+                rgba(0, 0, 0, 0.05) 100px
+            );
+            pointer-events: none;
+            z-index: -1;
+            transform: rotate(-45deg);
         }
 
         th, td {
@@ -91,7 +133,7 @@
         }
 
         tr:hover {
-            background-color: #f0f4ff;
+            background-color: rgba(240, 244, 255, 0.9);
             transform: translateY(-2px);
         }
 
@@ -194,14 +236,15 @@
             color: #ecf0f1;
         }
 
-        body.dark-mode::before {
-            color: #bbb;
+        body.dark-mode .watermark-overlay,
+        body.dark-mode table::before {
+            color: #ccc;
             background: repeating-linear-gradient(
                 -45deg,
                 transparent,
-                transparent 100px,
-                rgba(255, 255, 255, 0.05) 100px,
-                rgba(255, 255, 255, 0.05) 200px
+                transparent 50px,
+                rgba(255, 255, 255, 0.05) 50px,
+                rgba(255, 255, 255, 0.05) 100px
             );
         }
 
@@ -212,8 +255,7 @@
         }
 
         body.dark-mode table {
-            background: #34495e;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            background: rgba(52, 73, 94, 0.9);
         }
 
         body.dark-mode th {
@@ -225,7 +267,7 @@
         }
 
         body.dark-mode tr:hover {
-            background: #3e5a74;
+            background: rgba(62, 90, 116, 0.9);
         }
 
         body.dark-mode .countdown {
@@ -279,9 +321,27 @@
             body {
                 padding: 20px;
             }
-            body::before {
-                font-size: 30px;
-                line-height: 200px;
+            .watermark-overlay,
+            table::before {
+                font-size: 16px;
+                line-height: 80px;
+                background: repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(0, 0, 0, 0.05) 40px,
+                    rgba(0, 0, 0, 0.05) 80px
+                );
+            }
+            body.dark-mode .watermark-overlay,
+            body.dark-mode table::before {
+                background: repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(255, 255, 255, 0.05) 40px,
+                    rgba(255, 255, 255, 0.05) 80px
+                );
             }
             h1 {
                 font-size: 1.8rem;
@@ -321,6 +381,7 @@
     </style>
 </head>
 <body>
+    <div class="watermark-overlay"></div>
     <h1>Upcoming Bank Exams Countdown</h1>
 
     <!-- Option 2: Prominent text (uncomment to use instead of watermark) -->
