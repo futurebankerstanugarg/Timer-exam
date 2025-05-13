@@ -27,11 +27,33 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            /* Watermark background */
-            background-image: linear-gradient(135deg, #f2f8ff, #e0e7ff),
-                             url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><text x="20" y="200" font-family="Roboto, sans-serif" font-size="40" fill="%23666" opacity="0.2" transform="rotate(-45 150 150)">Future Bankers – Tanu Garg</text></svg>');
-            background-size: cover, 300px 300px;
-            background-repeat: no-repeat, repeat;
+            position: relative; /* Ensure watermark positioning */
+        }
+
+        /* Watermark using ::before pseudo-element */
+        body::before {
+            content: "Future Bankers – Tanu Garg";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            color: #555;
+            opacity: 0.4;
+            font-size: 40px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 250px; /* Spacing between watermark repetitions */
+            background: repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 100px,
+                rgba(0, 0, 0, 0.05) 100px,
+                rgba(0, 0, 0, 0.05) 200px
+            );
+            pointer-events: none; /* Prevent interaction with watermark */
+            z-index: -1; /* Place behind content */
+            transform: rotate(-45deg);
         }
 
         h1 {
@@ -170,11 +192,17 @@
         body.dark-mode {
             background: linear-gradient(135deg, #2c3e50, #34495e);
             color: #ecf0f1;
-            /* Watermark for dark mode */
-            background-image: linear-gradient(135deg, #2c3e50, #34495e),
-                             url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><text x="20" y="200" font-family="Roboto, sans-serif" font-size="40" fill="%23999" opacity="0.2" transform="rotate(-45 150 150)">Future Bankers – Tanu Garg</text></svg>');
-            background-size: cover, 300px 300px;
-            background-repeat: no-repeat, repeat;
+        }
+
+        body.dark-mode::before {
+            color: #bbb;
+            background: repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 100px,
+                rgba(255, 255, 255, 0.05) 100px,
+                rgba(255, 255, 255, 0.05) 200px
+            );
         }
 
         body.dark-mode h1,
@@ -250,6 +278,10 @@
         @media (max-width: 600px) {
             body {
                 padding: 20px;
+            }
+            body::before {
+                font-size: 30px;
+                line-height: 200px;
             }
             h1 {
                 font-size: 1.8rem;
